@@ -16,6 +16,8 @@ struct PersistenceController {
         for i in 0..<10 {
             let newItem = Item(context: viewContext)
             newItem.stringData = "\(i)"
+            newItem.savedDate = Date().addingTimeInterval((Double(i)*1000))
+            newItem.isPin = (i%3 == 0)
         }
         do {
             try viewContext.save()

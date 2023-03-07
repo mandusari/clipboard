@@ -15,7 +15,8 @@ struct ContentView: View {
     @State private var clipboardText: String? = nil
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.stringData, ascending: true)],
+        /// 최신 데이터가 위로..
+        sortDescriptors: [NSSortDescriptor(keyPath: \Item.stringData, ascending: false)],
         animation: .default)
     private var items: FetchedResults<Item>
     private let pasteboard = UIPasteboard.general
@@ -29,9 +30,12 @@ struct ContentView: View {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        Text("\(item.stringData ?? "")")
+                        VStack {
+                            Text("\(item.stringData ?? "")")
+//                            Text(dateFormatter(item.savedDate))
+                        }
                     } label: {
-                        Text("Item at \(item.stringData ?? "")")
+                        SideCell(item: item)
                     }
                 }
                 .onDelete(perform: deleteItems)
@@ -86,6 +90,7 @@ struct ContentView: View {
             }
         }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
