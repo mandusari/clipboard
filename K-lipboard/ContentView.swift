@@ -8,23 +8,17 @@
 import SwiftUI
 import CoreData
 import UniformTypeIdentifiers
+import Combine
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
-    @State private var clipboardText: String? = nil
-    
     @FetchRequest(
-        /// 최신 데이터가 위로..
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.stringData, ascending: false)],
         animation: .default)
     private var items: FetchedResults<Item>
-    private let pasteboard = UIPasteboard.general
+    private var vm = ClipboardPolling()
+    @State var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
 
-    private func setClipboard() {
-        pasteboard.string = "Test Clipboard"
-    }
-    
     var body: some View {
         NavigationView {
             List {
@@ -44,19 +38,12 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
-//                ToolbarItem {
-//                    Button(action: addItem) {
-//                        Label("Add Item", systemImage: "plus")
-//                    }
-//                }
             }
-            .onAppear {
-                if let text = UIPasteboard.general.string {
-                    addItem(text)
-                    clipboardText = text
-                }
-            }
-            
+        }
+        .onAppear {
+            vm.$string.sink { value in
+                addItem(value)
+            }.store(in: &cancellable)
         }
     }
 
