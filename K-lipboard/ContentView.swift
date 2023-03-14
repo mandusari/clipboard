@@ -13,7 +13,7 @@ import Combine
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.stringData, ascending: false)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Item.savedDate, ascending: false)],
         animation: .default)
     private var items: FetchedResults<Item>
     private var vm = ClipboardPolling()
@@ -23,61 +23,77 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(items) { item in
-                    NavigationLink {
-                        VStack {
-                            Text("\(item.stringData ?? "")")
-//                            Text(dateFormatter(item.savedDate))
-                        }
-                    } label: {
-                        SideCell(item: item)
-                    }
+                    SideCell(pinAction: { item in
+                        modifyItem(item: item)
+                    }, item: item)
+
+//                    NavigationLink {
+//                        VStack {
+//                            Text("\(item.stringData ?? "")")
+//                        }
+//                    } label: {
+//                        SideCell(item: item)
+//                    }
                 }
                 .onDelete(perform: deleteItems)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+                    Button {
+                        deleteAll()
+                    } label: {
+                        Image("delete_all_icon")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+                            .aspectRatio(contentMode: .fill)
+                    }
+                    .frame(width: 50, height: 50)
                 }
             }
         }
         .onAppear {
             vm.$string.sink { value in
-                addItem(value)
+                guard let text = value else { return }
+                addItem(text)
             }.store(in: &cancellable)
         }
     }
 
+    private func dataUpdate() {
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+    
     private func addItem(_ text: String = "") {
         withAnimation {
             let newItem = Item(context: viewContext)
             newItem.stringData = text
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            dataUpdate()
         }
     }
     
+    private func modifyItem(item: Item) {
+        let value = items.filter({$0 == item})
+        value.first?.isPin = item.isPin
+        dataUpdate()
+    }
+    
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            offsets.map { items[$0] }.forEach(viewContext.delete)
+            dataUpdate()
+        }
+    }
+    
+    private func deleteAll() {
+        items.forEach(viewContext.delete)
+        dataUpdate()
+    }
+
 }
 
 struct ContentView_Previews: PreviewProvider {

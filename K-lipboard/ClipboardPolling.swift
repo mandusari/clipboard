@@ -14,7 +14,7 @@ class ClipboardPolling: ObservableObject {
     private var pasteboard = UIPasteboard.general
     private var timer: Timer?
         
-    @Published var string = ""
+    @Published var string: String?
     
     init() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] timer in
@@ -22,8 +22,8 @@ class ClipboardPolling: ObservableObject {
             self.previousChangeCount = self.pasteboard.changeCount
             
             /// 우선 Text만 체크
-            if self.pasteboard.hasStrings {
-                self.string = self.pasteboard.string!
+            if self.pasteboard.hasStrings, let string = self.pasteboard.string {
+                self.string = string
             }
         }
     }

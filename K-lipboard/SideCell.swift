@@ -21,38 +21,44 @@ struct CellText: View {
     }
 }
     
-struct PinIcon: View {
-    var isActivate: Bool = false
-    
-    var body: some View {
-        if isActivate {
-            Image("status_bar_icon")
-                .resizable()
-                .frame(width: 25, height: 25)
-        }
-        else {
-            Image("status_bar_icon")
-                .resizable()
-                .frame(width: 25, height: 25)
-                .grayscale(0.9995)
-        }
-    }
-}
-
 /// 사이드메뉴 셀 모양 생성.
 struct SideCell: View {
+    var pinAction: (Item) -> Void
     var item: Item?
-    
+    @State var isActivate: Bool = false
+
     var body: some View {
         HStack {
-            PinIcon(isActivate: item?.isPin ?? false)
+            Button {
+                setPin()
+            } label: {
+                if isActivate {
+                    Image(systemName: "star.fill")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(.red)
+                }
+                else {
+                    Image(systemName: "star")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .grayscale(0.9995)
+                }
+            }
             VStack {
                 CellText(size: 30, content: "\(item?.stringData ?? "")")
                 CellText(size: 15, content: dateFormatter(item?.savedDate))
             }
         }
+        .buttonStyle(PlainButtonStyle())
     }
     
+    private func setPin() {
+        isActivate = !isActivate
+        item?.isPin = isActivate
+        pinAction(item!)
+    }
+
     private func dateFormatter(_ date: Date?) -> String {
         guard let date = date else { return ""}
         let dateFormatter = DateFormatter()
@@ -61,3 +67,4 @@ struct SideCell: View {
         return dateFormatter.string(from: date)
     }
 }
+
