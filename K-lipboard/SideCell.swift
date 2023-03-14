@@ -23,9 +23,9 @@ struct CellText: View {
     
 /// 사이드메뉴 셀 모양 생성.
 struct SideCell: View {
-    var pinAction: (Item) -> Void
+    var pinAction: () -> Void // Coredata에 직접 쓰기!
     var item: Item?
-    @State var isActivate: Bool = false
+    @State private var isActivate: Bool = false
 
     var body: some View {
         HStack {
@@ -51,12 +51,15 @@ struct SideCell: View {
             }
         }
         .buttonStyle(PlainButtonStyle())
+        .onAppear {
+            isActivate = item?.isPin ?? false
+        }
     }
     
     private func setPin() {
         isActivate = !isActivate
         item?.isPin = isActivate
-        pinAction(item!)
+        pinAction()
     }
 
     private func dateFormatter(_ date: Date?) -> String {

@@ -23,8 +23,8 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(items) { item in
-                    SideCell(pinAction: { item in
-                        modifyItem(item: item)
+                    SideCell(pinAction: {
+                        dataUpdate()
                     }, item: item)
 
 //                    NavigationLink {
@@ -75,13 +75,7 @@ struct ContentView: View {
             dataUpdate()
         }
     }
-    
-    private func modifyItem(item: Item) {
-        let value = items.filter({$0 == item})
-        value.first?.isPin = item.isPin
-        dataUpdate()
-    }
-    
+        
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { items[$0] }.forEach(viewContext.delete)
