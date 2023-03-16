@@ -16,24 +16,22 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.savedDate, ascending: false)],
         animation: .default)
     private var items: FetchedResults<Item>
-    private var vm = ClipboardPolling()
+    private var polling = ClipboardPolling()
     @State var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
 
     var body: some View {
         NavigationView {
             List {
                 ForEach(items) { item in
-                    SideCell(pinAction: {
-                        dataUpdate()
-                    }, item: item)
-
-//                    NavigationLink {
-//                        VStack {
-//                            Text("\(item.stringData ?? "")")
-//                        }
-//                    } label: {
-//                        SideCell(item: item)
-//                    }
+                    NavigationLink {
+                        VStack {
+                            Text("\(item.stringData ?? "")")
+                        }
+                    } label: {
+                        SideCell(pinAction: {
+                            dataUpdate()
+                        }, item: item)
+                    }
                 }
                 .onDelete(perform: deleteItems)
             }
@@ -52,7 +50,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-            vm.$string.sink { value in
+            polling.$string.sink { value in
                 guard let text = value else { return }
                 addItem(text)
             }.store(in: &cancellable)
@@ -84,8 +82,10 @@ struct ContentView: View {
     }
     
     private func deleteAll() {
-        items.forEach(viewContext.delete)
-        dataUpdate()
+        withAnimation {
+            items.forEach(viewContext.delete)
+            dataUpdate()
+        }
     }
 
 }
