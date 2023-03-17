@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "icons8-휴지통-비우기-50.png",
+      "filename" : "trash-25.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icons8-휴지통-비우기-100.png",
+      "filename" : "trash-50.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

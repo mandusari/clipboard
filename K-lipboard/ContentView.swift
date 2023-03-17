@@ -67,14 +67,44 @@ struct ContentView: View {
     }
     
     private func addItem(_ text: String = "") {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.stringData = text
-            newItem.savedDate = Date()
-            dataUpdate()
+        if isDuplicated(value: text) == false {
+            withAnimation {
+                let newItem = Item(context: viewContext)
+                newItem.stringData = text
+                newItem.savedDate = Date()
+                dataUpdate()
+            }
         }
     }
+       
+    private func isDuplicated(value: String) -> Bool {
+        // 중복 검색할 속성 지정
+        let attributeName = "stringData"
+
+        // NSFetchRequest를 생성하여 해당 속성을 검색
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
+        request.returnsObjectsAsFaults = false
+        request.propertiesToFetch = [attributeName]
+        request.resultType = .dictionaryResultType
+        request.returnsDistinctResults = true
+
+        // 중복된 데이터가 있으면 삭제
+        do {
+            let results = try viewContext.fetch(request) as! [[String: AnyObject]]
+            for dict in results {
+                let value = dict[attributeName]!
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
+                fetchRequest.predicate = NSPredicate(format: "\(attributeName) == %@", value as! CVarArg)
+                let objects = try viewContext.fetch(fetchRequest) as! [NSManagedObject]
+                if objects.count >= 1 {
+                    return true
+                }
+            }        } catch {
+            print("Error: \\(error)")
+        }
         
+        return false
+    }
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             offsets.map { items[$0] }.forEach(viewContext.delete)
