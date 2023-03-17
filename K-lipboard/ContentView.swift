@@ -70,6 +70,7 @@ struct ContentView: View {
         withAnimation {
             let newItem = Item(context: viewContext)
             newItem.stringData = text
+            newItem.savedDate = Date()
             dataUpdate()
         }
     }
