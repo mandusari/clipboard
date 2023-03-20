@@ -9,12 +9,13 @@ import SwiftUI
 
 @main
 struct K_lipboardApp: App {
-    let persistenceController = PersistenceController.shared
+    @Environment(\.scenePhase) var scenePhase
+    private let polling = ClipboardPolling()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         }
     }
 }

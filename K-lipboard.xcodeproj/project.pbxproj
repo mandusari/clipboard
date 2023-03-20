@@ -43,6 +43,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		550E2FAD29C7484C00206C5F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				55C7F16929B8C53F0097AC54 /* ClipboardPolling.swift */,
+				5591659A29B335E8003E36B0 /* Persistence.swift */,
+				5591659C29B335E8003E36B0 /* K_lipboard.xcdatamodeld */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		5591658529B335E5003E36B0 = {
 			isa = PBXGroup;
 			children = (
@@ -62,14 +72,11 @@
 		5591659029B335E6003E36B0 /* K-lipboard */ = {
 			isa = PBXGroup;
 			children = (
-				55C7F16729B75F3B0097AC54 /* SideCell.swift */,
+				55F8BCAE29C8907100C6D2D8 /* View */,
+				550E2FAD29C7484C00206C5F /* Data */,
 				5591659129B335E6003E36B0 /* K_lipboardApp.swift */,
-				5591659329B335E6003E36B0 /* ContentView.swift */,
-				55C7F16929B8C53F0097AC54 /* ClipboardPolling.swift */,
 				5591659529B335E8003E36B0 /* Assets.xcassets */,
-				5591659A29B335E8003E36B0 /* Persistence.swift */,
 				5591659F29B335E8003E36B0 /* Info.plist */,
-				5591659C29B335E8003E36B0 /* K_lipboard.xcdatamodeld */,
 				5591659729B335E8003E36B0 /* Preview Content */,
 				559165A529B4896D003E36B0 /* StatusBarController.swift */,
 			);
@@ -82,6 +89,15 @@
 				5591659829B335E8003E36B0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		55F8BCAE29C8907100C6D2D8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				55C7F16729B75F3B0097AC54 /* SideCell.swift */,
+				5591659329B335E6003E36B0 /* ContentView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,12 +322,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mandusari.K-lipboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -343,12 +360,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mandusari.K-lipboard";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

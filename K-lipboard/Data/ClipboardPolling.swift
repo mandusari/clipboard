@@ -10,20 +10,21 @@ import SwiftUI
 import CoreData
 
 class ClipboardPolling: ObservableObject {
-    private var previousChangeCount = 0
-    private var pasteboard = UIPasteboard.general
+    private var pasteboard = NSPasteboard.general
     private var timer: Timer?
-        
-    @Published var string: String?
-    
+    private let dataController = PersistenceController.shared
+    private var previousChangeCount = UserDefaults.standard.integer(forKey: "ClipboardChangeCount")
+
     init() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] timer in
+            // NSPasteboard에서는 카운트가 별 의미 없음..
             guard let self = self, self.pasteboard.changeCount != self.previousChangeCount else { return }
             self.previousChangeCount = self.pasteboard.changeCount
-            
+            UserDefaults.standard.set(self.previousChangeCount, forKey: "ClipboardChangeCount")
+
             /// 우선 Text만 체크
-            if self.pasteboard.hasStrings, let string = self.pasteboard.string {
-                self.string = string
+            if let string = self.pasteboard.string(forType: .string) {
+                self.dataController.addItem(string)
             }
         }
     }
