@@ -75,7 +75,9 @@ struct ContentView: View {
     
     private func deleteAll() {
         items.forEach { item in
-            dataController.delete(item: item)
+            if item.isPin == false {
+                dataController.delete(item: item)
+            }
         }
     }
 }

@@ -10,21 +10,22 @@ import SwiftUI
 @main
 struct K_lipboardApp: App {
     private let polling = ClipboardPolling()
+    @Environment(\.openWindow) var openWindow
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup("K-lipboard", id: "Main-Window") {
             ContentView()
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         }
         
         
-        MenuBarExtra("", systemImage: "chevron.backward.to.line") {
+        MenuBarExtra("K-lipboard", systemImage: "chevron.backward.to.line") {
             StatusBarList()
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
-            
             Divider()
-            Button("열기") { debugPrint("어떻게 열지...??") }
+            Button("열기") { openWindow(id:"Main-Window") }
             Button("종료") { NSApplication.shared.terminate(nil) }
         }
+        .menuBarExtraStyle(.menu)
     }
 }
