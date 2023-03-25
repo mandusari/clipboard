@@ -9,13 +9,22 @@ import SwiftUI
 
 @main
 struct K_lipboardApp: App {
-    @Environment(\.scenePhase) var scenePhase
     private let polling = ClipboardPolling()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+        }
+        
+        
+        MenuBarExtra("", systemImage: "chevron.backward.to.line") {
+            StatusBarList()
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
+            
+            Divider()
+            Button("열기") { debugPrint("어떻게 열지...??") }
+            Button("종료") { NSApplication.shared.terminate(nil) }
         }
     }
 }

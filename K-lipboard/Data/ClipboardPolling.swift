@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 import CoreData
 
-class ClipboardPolling: ObservableObject {
+class ClipboardPolling {
     private var pasteboard = NSPasteboard.general
     private var timer: Timer?
     private let dataController = PersistenceController.shared
@@ -17,7 +17,6 @@ class ClipboardPolling: ObservableObject {
 
     init() {
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] timer in
-            // NSPasteboard에서는 카운트가 별 의미 없음..
             guard let self = self, self.pasteboard.changeCount != self.previousChangeCount else { return }
             self.previousChangeCount = self.pasteboard.changeCount
             UserDefaults.standard.set(self.previousChangeCount, forKey: "ClipboardChangeCount")

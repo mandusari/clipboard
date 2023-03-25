@@ -16,6 +16,7 @@
 		559165A629B4896D003E36B0 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559165A529B4896D003E36B0 /* StatusBarController.swift */; };
 		55C7F16829B75F3B0097AC54 /* SideCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C7F16729B75F3B0097AC54 /* SideCell.swift */; };
 		55C7F16A29B8C53F0097AC54 /* ClipboardPolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C7F16929B8C53F0097AC54 /* ClipboardPolling.swift */; };
+		55F8BCB029CE69B500C6D2D8 /* StatusBarList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F8BCAF29CE69B400C6D2D8 /* StatusBarList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		559165A529B4896D003E36B0 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		55C7F16729B75F3B0097AC54 /* SideCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideCell.swift; sourceTree = "<group>"; };
 		55C7F16929B8C53F0097AC54 /* ClipboardPolling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPolling.swift; sourceTree = "<group>"; };
+		55F8BCAF29CE69B400C6D2D8 /* StatusBarList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBarList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				55C7F16729B75F3B0097AC54 /* SideCell.swift */,
 				5591659329B335E6003E36B0 /* ContentView.swift */,
+				55F8BCAF29CE69B400C6D2D8 /* StatusBarList.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 				5591659B29B335E8003E36B0 /* Persistence.swift in Sources */,
 				5591659429B335E6003E36B0 /* ContentView.swift in Sources */,
 				5591659E29B335E8003E36B0 /* K_lipboard.xcdatamodeld in Sources */,
+				55F8BCB029CE69B500C6D2D8 /* StatusBarList.swift in Sources */,
 				55C7F16A29B8C53F0097AC54 /* ClipboardPolling.swift in Sources */,
 				559165A629B4896D003E36B0 /* StatusBarController.swift in Sources */,
 				55C7F16829B75F3B0097AC54 /* SideCell.swift in Sources */,
