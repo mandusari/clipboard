@@ -22,6 +22,11 @@ struct StatusBarList: View {
             Button {
                 pasteboard.clearContents()
                 pasteboard.setString(item.stringData ?? "", forType: .string)
+                                
+                
+                let event = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(0x09), keyDown: true)
+                event?.flags = CGEventFlags.maskCommand
+                event?.post(tap: .cghidEventTap)
             } label: {
                 Text(item.stringData ?? "")
                     .frame(maxWidth: 10)
