@@ -24,15 +24,14 @@ struct CellText: View {
 /// 사이드메뉴 셀 모양 생성.
 struct SideCell: View {
     var pinAction: () -> Void // Coredata에 직접 쓰기!
-    var item: Item?
-    @State private var isActivate: Bool = false
+    @State var item: Item?
 
     var body: some View {
         HStack {
             Button {
                 setPin()
             } label: {
-                if isActivate {
+                if item?.isPin ?? false {
                     Image(systemName: "star.fill")
                         .resizable()
                         .frame(width: 25, height: 25)
@@ -51,14 +50,10 @@ struct SideCell: View {
             }
         }
         .buttonStyle(PlainButtonStyle())
-        .onAppear {
-            isActivate = item?.isPin ?? false
-        }
     }
     
     private func setPin() {
-        isActivate = !isActivate
-        item?.isPin = isActivate
+        item?.isPin = !(item?.isPin ?? false)
         pinAction()
     }
 

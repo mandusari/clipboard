@@ -13,45 +13,43 @@ import Combine
 struct ContentView: View {
     private let dataController = PersistenceController.shared
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.savedDate, ascending: false)],
+        sortDescriptors: [
+            NSSortDescriptor(keyPath: \Item.isPin, ascending: false),
+            NSSortDescriptor(keyPath: \Item.savedDate, ascending: false)
+        ],
         animation: .default)
     var items: FetchedResults<Item>
 
-    @State var cancellable: Set<AnyCancellable> = Set<AnyCancellable>()
     @State private var showingAlert = false
-
     @State private var selectionItem: Item? = nil
     
     var body: some View {
         NavigationView {
             List(items, id:\.self, selection: $selectionItem) { item in
-//                ForEach(items) { item in
-                    NavigationLink {
-                        VStack {
-                            Text("\(item.stringData ?? "")")
-                        }
-                    } label: {
-                        VStack {
-                            SideCell(pinAction: {
-                                dataController.dataUpdate()
-                            }, item: item)
-                        }
-//                        .contextMenu {
-//                            VStack {
-//                                Text(item.stringData ?? "")
-//                                Divider()
-//                                Button(action: {
-//                                    dataController.delete(item: item)
-//                                }) {
-//                                    Text("삭제")
-//                                        .foregroundColor(.red)
-//                                        .fontWeight(.bold)
-//                                }
-//                            }
-//                        }
-                        
+                NavigationLink {
+                    VStack {
+                        Text("\(item.stringData ?? "")")
                     }
-//                }
+                } label: {
+                    VStack {
+                        SideCell(pinAction: {
+                            dataController.dataUpdate()
+                        }, item: item)
+                        .contextMenu {
+                            VStack {
+                                Text(item.stringData ?? "")
+                                Divider()
+                                Button(action: {
+                                    dataController.delete(item: item)
+                                }) {
+                                    Text("삭제")
+                                        .foregroundColor(.red)
+                                        .fontWeight(.bold)
+                                }
+                            }
+                        }
+                    }
+                }
             }
             .toolbar {
                 ToolbarItem {

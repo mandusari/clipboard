@@ -59,15 +59,23 @@ struct PersistenceController {
         let emptyCheck = text.trimmingCharacters(in: .whitespaces)
         guard emptyCheck.isEmpty == false else { return }
         
-        deleteDuplicated(value: text)
+        let previousItem = deleteDuplicated(value: text)
+        let wasPin = previousItem?.isPin ?? false
+
         let newItem = Item(context: container.viewContext)
         newItem.stringData = text
-        newItem.savedDate = Date()
-        newItem.isPin = false
+        if wasPin == true {
+            newItem.savedDate = previousItem?.savedDate ?? Date()
+        }
+        else {
+            newItem.savedDate = Date()
+        }
+        newItem.isPin = wasPin
+        
         dataUpdate()
     }
        
-    private func deleteDuplicated(value: String) {
+    private func deleteDuplicated(value: String) -> Item? {
         // 중복 검색할 속성 지정
         let attributeName = "stringData"
 
@@ -78,19 +86,26 @@ struct PersistenceController {
         request.resultType = .dictionaryResultType
         request.returnsDistinctResults = true
 
+        var previousItem: Item? = nil
+        
         do {
             let results = try container.viewContext.fetch(request) as! [[String: AnyObject]]
             for _ in results {
                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Item")
                 fetchRequest.predicate = NSPredicate(format: "\(attributeName) == %@", value as CVarArg)
-                let objects = try container.viewContext.fetch(fetchRequest) as! [NSManagedObject]
+                let objects = try container.viewContext.fetch(fetchRequest) as! [Item]
                 if objects.count > 0 {
-                    _ = objects.map{ container.viewContext.delete($0) }
+                    _ = objects.map{ item in
+                        previousItem = item
+                        container.viewContext.delete(item)
+                    }
                 }
             }
         } catch {
             print("Error: \\(error)")
         }
+        
+        return previousItem
     }
     func delete(item: Item) {
         container.viewContext.delete(item)
