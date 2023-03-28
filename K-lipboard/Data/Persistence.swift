@@ -14,11 +14,16 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
+        var priority: Int64 = 0
         for i in 0..<10 {
             let newItem = Item(context: viewContext)
             newItem.stringData = "\(i)"
             newItem.savedDate = Date().addingTimeInterval((Double(i)*1000))
             newItem.isPin = (i%3 == 0)
+            if newItem.isPin {
+                newItem.priorityPin = priority
+                priority += 1 
+            }
         }
         do {
             try viewContext.save()

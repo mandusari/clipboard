@@ -13,6 +13,7 @@ struct StatusBarList: View {
     @FetchRequest(
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Item.isPin, ascending: false),
+            NSSortDescriptor(keyPath: \Item.priorityPin, ascending: true),
             NSSortDescriptor(keyPath: \Item.savedDate, ascending: false)
         ],
         animation: .default)
@@ -53,9 +54,10 @@ struct StatusBarList: View {
 
 extension View {
     
-    public func customShortcut(_ index: Int, isPin: Bool) -> some View {
+    func customShortcut(_ index: Int, isPin: Bool) -> some View {
         if index < 10 && isPin == true {
-            return AnyView(self.keyboardShortcut(KeyEquivalent(Character("\(index)")), modifiers: [.command, .shift]))
+            let keyValue = (index+1) % 10
+            return AnyView(self.keyboardShortcut(KeyEquivalent(Character("\(keyValue)")), modifiers: [.command, .shift]))
         }
         
         return AnyView(self)

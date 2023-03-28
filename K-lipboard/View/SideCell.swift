@@ -53,7 +53,11 @@ struct SideCell: View {
     }
     
     private func setPin() {
-        item?.isPin = !(item?.isPin ?? false)
+        guard let item = item else { return }
+        item.isPin = !item.isPin
+        if item.isPin == false {
+            item.priorityPin = -1
+        }
         pinAction()
     }
 

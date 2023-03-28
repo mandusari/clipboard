@@ -15,6 +15,7 @@ struct ContentView: View {
     @FetchRequest(
         sortDescriptors: [
             NSSortDescriptor(keyPath: \Item.isPin, ascending: false),
+            NSSortDescriptor(keyPath: \Item.priorityPin, ascending: true),
             NSSortDescriptor(keyPath: \Item.savedDate, ascending: false)
         ],
         animation: .default)
@@ -29,10 +30,18 @@ struct ContentView: View {
                 NavigationLink {
                     VStack {
                         Text("\(item.stringData ?? "")")
+                        Text("\(item.priorityPin)")
                     }
                 } label: {
                     VStack {
                         SideCell(pinAction: {
+                            // Sort
+                            var priority: Int64 = 0
+                            let _ = items.filter{ $0.isPin == true }
+                                .map {
+                                    $0.priorityPin = priority
+                                    priority += 1
+                                }
                             dataController.dataUpdate()
                         }, item: item)
                         .contextMenu {
