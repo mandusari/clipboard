@@ -66,7 +66,6 @@ struct PersistenceController {
         
         let previousItem = deleteDuplicated(value: text)
         let wasPin = previousItem?.isPin ?? false
-
         let newItem = Item(context: container.viewContext)
         newItem.stringData = text
         if wasPin == true {
@@ -76,7 +75,12 @@ struct PersistenceController {
             newItem.savedDate = Date()
         }
         newItem.isPin = wasPin
-        
+        if wasPin {
+            newItem.priorityPin = previousItem?.priorityPin ?? -1
+        }
+        else {
+            newItem.priorityPin = -1
+        }
         dataUpdate()
     }
        
