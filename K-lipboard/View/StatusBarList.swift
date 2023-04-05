@@ -8,6 +8,20 @@
 import SwiftUI
 import CoreData
 import Combine
+import KeyboardShortcuts
+
+extension KeyboardShortcuts.Name {
+    static let one = Self("one", default: .init(.one, modifiers: [.command, .option]))
+    static let two = Self("two", default: .init(.two, modifiers: [.command, .option]))
+    static let three = Self("three", default: .init(.three, modifiers: [.command, .option]))
+    static let four = Self("four", default: .init(.four, modifiers: [.command, .option]))
+    static let five = Self("five", default: .init(.five, modifiers: [.command, .option]))
+    static let six = Self("six", default: .init(.six, modifiers: [.command, .option]))
+    static let seven = Self("seven", default: .init(.seven, modifiers: [.command, .option]))
+    static let eight = Self("eight", default: .init(.eight, modifiers: [.command, .option]))
+    static let nine = Self("nine", default: .init(.nine, modifiers: [.command, .option]))
+    static let zero = Self("zero", default: .init(.zero, modifiers: [.command, .option]))
+}
 
 struct StatusBarList: View {
     @FetchRequest(
@@ -24,15 +38,11 @@ struct StatusBarList: View {
         ForEach(items.indices, id: \.self) { index in
             
             let item = items[index]
+
             Button {
                 // 선택한 텍스트를 보드에 다시 집어넣음.
                 pasteboard.clearContents()
                 pasteboard.setString(item.stringData ?? "", forType: .string)
-                
-                // command+v 단축키로 텍스트를 현재 화면에 붙여넣음.
-//                let event = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(0x09), keyDown: true)
-//                event?.flags = CGEventFlags.maskCommand
-//                event?.post(tap: .cghidEventTap)
             } label: {
                 let stringData = (item.stringData ?? "")
                 HStack {
@@ -46,18 +56,46 @@ struct StatusBarList: View {
                     Text(stringData.trimmingCharacters(in: .whitespaces).prefix(15))
                 }
             }
-            .customShortcut(index, isPin: item.isPin)
+            .customShortcut(index, isPin: item.isPin) { key in
+                debugPrint("KEYVALUE = \(key)")
+                let name = convertTo(key: key)
+                KeyboardShortcuts.onKeyDown(for: name) {
+                    pasteboard.clearContents()
+                    debugPrint(item.stringData ?? "")
+                    pasteboard.setString(item.stringData ?? "", forType: .string)
+                    let event = CGEvent(keyboardEventSource: nil, virtualKey: CGKeyCode(0x09), keyDown: true)
+                    event?.flags = CGEventFlags.maskCommand
+                    event?.post(tap: .cghidEventTap)
+                }
+            }
         }
     }
     
+    private func convertTo(key: Int) -> KeyboardShortcuts.Name {
+        switch key {
+        case 0: return .zero
+        case 1: return .one
+        case 2: return .two
+        case 3: return .three
+        case 4: return .four
+        case 5: return .five
+        case 6: return .six
+        case 7: return .seven
+        case 8: return .eight
+        case 9: return .nine
+        default:
+            return .one
+        }
+    }
 }
 
 extension View {
     
-    func customShortcut(_ index: Int, isPin: Bool) -> some View {
+    func customShortcut(_ index: Int, isPin: Bool, keyRegisterHandler: (Int) -> Void) -> some View {
         if index < 10 && isPin == true {
             let keyValue = (index+1) % 10
-            return AnyView(self.keyboardShortcut(KeyEquivalent(Character("\(keyValue)")), modifiers: [.command, .shift]))
+            keyRegisterHandler(keyValue)
+            return AnyView(self.keyboardShortcut(KeyEquivalent(Character("\(keyValue)")), modifiers: [.option, .command]))
         }
         
         return AnyView(self)

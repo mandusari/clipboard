@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		555B431229DDAC3B0090AB13 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 555B431129DDAC3B0090AB13 /* KeyboardShortcuts */; };
 		5591659229B335E6003E36B0 /* K_lipboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5591659129B335E6003E36B0 /* K_lipboardApp.swift */; };
 		5591659429B335E6003E36B0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5591659329B335E6003E36B0 /* ContentView.swift */; };
 		5591659629B335E8003E36B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5591659529B335E8003E36B0 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				555B431229DDAC3B0090AB13 /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +118,9 @@
 			dependencies = (
 			);
 			name = "K-lipboard";
+			packageProductDependencies = (
+				555B431129DDAC3B0090AB13 /* KeyboardShortcuts */,
+			);
 			productName = "K-lipboard";
 			productReference = 5591658E29B335E6003E36B0 /* K-lipboard.app */;
 			productType = "com.apple.product-type.application";
@@ -144,6 +149,9 @@
 				Base,
 			);
 			mainGroup = 5591658529B335E5003E36B0;
+			packageReferences = (
+				555B431029DDAC3B0090AB13 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+			);
 			productRefGroup = 5591658F29B335E6003E36B0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -311,6 +319,7 @@
 				INFOPLIST_FILE = "K-lipboard/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "K-lipboard";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "복사 붙여넣기 할거야!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -349,6 +358,7 @@
 				INFOPLIST_FILE = "K-lipboard/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "K-lipboard";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "복사 붙여넣기 할거야!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -395,6 +405,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		555B431029DDAC3B0090AB13 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		555B431129DDAC3B0090AB13 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 555B431029DDAC3B0090AB13 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		5591659C29B335E8003E36B0 /* K_lipboard.xcdatamodeld */ = {
