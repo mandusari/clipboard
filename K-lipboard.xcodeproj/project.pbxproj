@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		555B431229DDAC3B0090AB13 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 555B431129DDAC3B0090AB13 /* KeyboardShortcuts */; };
+		555B431529E44C480090AB13 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 555B431429E44C480090AB13 /* HotKey */; };
 		5591659229B335E6003E36B0 /* K_lipboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5591659129B335E6003E36B0 /* K_lipboardApp.swift */; };
 		5591659429B335E6003E36B0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5591659329B335E6003E36B0 /* ContentView.swift */; };
 		5591659629B335E8003E36B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5591659529B335E8003E36B0 /* Assets.xcassets */; };
@@ -38,7 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555B431229DDAC3B0090AB13 /* KeyboardShortcuts in Frameworks */,
+				555B431529E44C480090AB13 /* HotKey in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,7 +119,7 @@
 			);
 			name = "K-lipboard";
 			packageProductDependencies = (
-				555B431129DDAC3B0090AB13 /* KeyboardShortcuts */,
+				555B431429E44C480090AB13 /* HotKey */,
 			);
 			productName = "K-lipboard";
 			productReference = 5591658E29B335E6003E36B0 /* K-lipboard.app */;
@@ -150,7 +150,7 @@
 			);
 			mainGroup = 5591658529B335E5003E36B0;
 			packageReferences = (
-				555B431029DDAC3B0090AB13 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				555B431329E44C480090AB13 /* XCRemoteSwiftPackageReference "HotKey" */,
 			);
 			productRefGroup = 5591658F29B335E6003E36B0 /* Products */;
 			projectDirPath = "";
@@ -310,6 +310,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"K-lipboard/Preview Content\"";
@@ -349,6 +351,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"K-lipboard/Preview Content\"";
@@ -407,21 +411,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		555B431029DDAC3B0090AB13 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+		555B431329E44C480090AB13 /* XCRemoteSwiftPackageReference "HotKey" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			repositoryURL = "https://github.com/soffes/HotKey";
 			requirement = {
-				branch = main;
+				branch = master;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		555B431129DDAC3B0090AB13 /* KeyboardShortcuts */ = {
+		555B431429E44C480090AB13 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 555B431029DDAC3B0090AB13 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
-			productName = KeyboardShortcuts;
+			package = 555B431329E44C480090AB13 /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
 		};
 /* End XCSwiftPackageProductDependency section */
 
